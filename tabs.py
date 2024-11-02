@@ -8,7 +8,7 @@ google_sheet_url = "https://docs.google.com/spreadsheets/d/1ZudQZq_OOMLZr5qojWo9
 df = get_updated_data(google_sheet_url)
 
 # Tab 1: Branch-wise Placement
-def tab1_content():
+def tab1_content(df):
     st.header("Branch-wise Internship")
     branch_code = st.selectbox('Select Branch Code', df['branch_code'].unique())
     branch_data = df[df['branch_code'] == branch_code]
@@ -80,7 +80,7 @@ def tab1_content():
 
 
 # Tab 2: Internship Stats
-def tab2_content():
+def tab2_content(df):
     # Aggregating the data based on company
     company_data = df.groupby('company').agg(
         Number_of_Students=('name', 'count'),
@@ -189,7 +189,7 @@ def tab2_content():
 
 
 # Tab 3: Overall Stats
-def tab3_content():
+def tab3_content(df):
     st.subheader("Overall Statics : ")
     stipend_data = df.dropna(subset=['stipend'])
     min_stipend = stipend_data['stipend'].min()
@@ -276,7 +276,7 @@ def tab3_content():
     st.write("List of Companies : ")
     st.table(company_data)
 
-def tab4_content():
+def tab4_content(df):
     st.subheader("Search Student Details")
     search_type = st.selectbox("Search by", ["Registration Number", "Name"])
 
