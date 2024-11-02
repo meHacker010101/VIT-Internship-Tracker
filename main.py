@@ -490,7 +490,7 @@ current_time = time.time()
 # Ensure last_update_time is a float or None
 last_update_time = st.session_state.last_update_time
 if last_update_time is None or (isinstance(last_update_time, float) and (current_time - last_update_time) > 3600):
-    get_updated_data(google_sheet_url)
+    df = get_updated_data(google_sheet_url)
     st.session_state.last_update_time = current_time
 
 
@@ -499,18 +499,18 @@ if st.session_state.logged_in:
     st.write("Welcome to the application!")
     tab1, tab2, tab4, tab3 = st.tabs(["Branch-wise Internships", "Company-wise Internships", "Specific Search", "Overall Stats*"])
     with tab1:
-        tab1_content()
+        tab1_content(df)
     with tab2:
-        tab2_content()
+        tab2_content(df)
     with tab3:
-        tab3_content()
+        tab3_content(df)
     with tab4:
-        tab4_content()
+        tab4_content(df)
 else:
     st.write("Please log in to access all features.")
     tab, = st.tabs(["*Overall Stats*"])
     with tab:
-        tab3_content()
+        tab3_content(df)
 
 
 st.markdown(
